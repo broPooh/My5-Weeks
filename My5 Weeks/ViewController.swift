@@ -11,6 +11,10 @@ import SwiftyJSON
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var currentTempLabel: UILabel!
+    @IBOutlet weak var windSpeedLabel: UILabel!
+    @IBOutlet weak var humidityLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -29,6 +33,18 @@ class ViewController: UIViewController {
             case .success(let value):
                 let json = JSON(value)
                 print("JSON: \(json)")
+                
+                
+                let currentTemp = json["main"]["temp"].doubleValue
+                print(currentTemp)
+                
+                let humidity = json["main"]["humidity"].intValue
+                let windSeed = json["wind"]["speed"].doubleValue
+                
+                self.currentTempLabel.text = "\(Int(currentTemp))°C"
+                self.windSpeedLabel.text = "\(Int(windSeed))"
+                self.humidityLabel.text = "\(Int(humidity))"
+                
             case .failure(let error):
                 print(error)
             }
